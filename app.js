@@ -1,11 +1,18 @@
 "use strict"
 
 const express = require( 'express' );
+const nunjucks = require( 'nunjucks' );
 const app = express();
-
 const PORT = 3000;
 
-app.use((request, response, next)=>{
+//use nunjucks on app.js
+nunjucks.configure('views', {
+  autoescape: true,
+  express: app,
+  noCache: true
+});
+
+app.use("/", (request, response, next)=>{
   //console.log(request);
 
   let method = request.method;
@@ -13,6 +20,12 @@ app.use((request, response, next)=>{
   console.log("method: "+ method + " ,url: " + url);
 
   next();
+})
+
+app.get('/', (request, response)=>{
+
+  response.render('index.html');
+
 })
 
 app.get('/', (request, response)=>{
