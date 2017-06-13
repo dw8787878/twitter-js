@@ -2,8 +2,13 @@
 
 const express = require( 'express' );
 const nunjucks = require( 'nunjucks' );
+const routes = require('./routes');
+
+
 const app = express();
 const PORT = 3000;
+
+app.set('view engine', 'html');
 
 //use nunjucks on app.js
 nunjucks.configure('views', {
@@ -12,27 +17,10 @@ nunjucks.configure('views', {
   noCache: true
 });
 
-app.use("/", (request, response, next)=>{
-  //console.log(request);
+//Data
+const people = [{name: 'Full'}, {name: 'Stacker'}, {name: 'Son'}];
 
-  let method = request.method;
-  let url = request.url;
-  console.log("method: "+ method + " ,url: " + url);
-
-  next();
-})
-
-app.get('/', (request, response)=>{
-
-  response.render('index.html');
-
-})
-
-app.get('/', (request, response)=>{
-
-  response.send('Welcome to my SERVER!');
-
-})
+app.use('/', routes);
 
 app.listen(PORT, ()=>{
 
