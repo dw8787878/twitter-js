@@ -6,7 +6,8 @@ var data = [];
 
 
 function add (name, content){
-  data.push({ name: name, content: content });
+  var id = (data.length + 1).toString();
+  data.push({ name: name, content: content, uniqueID: id});
 }
 
 function list (){
@@ -17,11 +18,7 @@ function find (properties) {
   return _.cloneDeep(_.filter(data, properties));
 }
 
-module.exports = {
-  add : add,
-  list : list,
-  find : find
-}
+
 
 const randArrayEl = function(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -38,15 +35,18 @@ const getFakeTweet = function() {
   return "Fullstack Academy is " + randArrayEl(awesome_adj) + "! The instructors are just so " + randArrayEl(awesome_adj) + ". #fullstacklove #codedreams";
 };
 
+// adds to database[]
 for (let i = 0; i < 10; i++) {
-  module.exports.add( getFakeName(), getFakeTweet() );
+  add( getFakeName(), getFakeTweet() );
 }
 
 
+// add('Nimit Hashington', 'Awesome!');
 
-//console.log("data", data);
-add('Nimit Hashington', 'Awesome!');
+// var foundData = module.exports.find({name: 'Nimit Hashington'});
 
-var foundData = module.exports.find({name: 'Nimit Hashington'});
-
-console.log(foundData);
+module.exports = {
+  add : add,
+  list : list,
+  find : find
+}
