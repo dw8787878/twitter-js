@@ -14,11 +14,10 @@ router.use("/", (request, response, next)=>{
   next();
 })
 
-
 router.get('/users/:name', function(request, response){
   var paramName = request.params.name;
   var list = tweetBank.find({name: paramName});
-  response.render('index', {tweets: list});
+  response.render('index', {tweets: list, currName: paramName, showForm: true});
 
 });
 
@@ -26,7 +25,7 @@ router.get('/tweets/:id', function(request, response){
   var id = request.params.id;
   //notice uniqueID is referring to tweetBank.js data key
   var list = tweetBank.find({uniqueID: id});
-  response.render('index', {tweets: list});
+  response.render('index', {tweets: list, showForm: true});
 
 });
 
